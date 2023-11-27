@@ -1,0 +1,53 @@
+{% extends 'miapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'miapp/header.html' %}
+<main>
+    <section id="presentacion">
+        <img src="{% static 'miapp/media/R.jpg' %}" alt="Fondo">
+        <h2>Calendario de actividades {{año}}</h2>
+    </section>
+    <section id="selectores">
+        <form action="" method="get">
+            <select name="segmento" class="form-select" aria-label="Default select example" onchange="this.form.submit()">
+                {% for segmento in opciones_segmentos%}
+                <option value="{{segmento.0}}">{{segmento.1}}</option>
+                {% endfor %}
+            </select>
+            <select name="tipo" class="form-select" aria-label="Default select example" onchange="this.form.submit()">
+                {% for tipo in opciones_tipo%}
+                <option value="{{tipo.0}}">{{tipo.1}}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </section>
+    <section id="tabla">
+        <h2>Actividades</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Hito</th>
+                  <th scope="col">Fecha inicio</th>
+                  <th scope="col">Fecha término</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Segmento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evento in eventos %}
+                <tr>
+                    <td>{{evento.titulo}}</td>
+                    <td>{{evento.fecha_inicio}}</td>
+                    <td>{{evento.fecha_termino}}</td>
+                    <td>{{evento.get_tipo_display}}</td>
+                    <td>{{evento.get_segmento_display}}</td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}

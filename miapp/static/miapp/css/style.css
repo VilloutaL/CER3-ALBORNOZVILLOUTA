@@ -1,0 +1,67 @@
+@font-face {
+    font-family: 'RobotoCondensed';
+    src: url("fonts/RobotoCondensed.ttf");
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'RobotoCondensed';
+}
+
+header{
+    height: 12vh;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+header img{
+    height: 80%;
+}
+
+#presentacion{
+    height: 60vh;
+}
+
+#presentacion img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#presentacion h2{
+    position: absolute;
+    top: 200px;
+    left: 100px;
+    color: white;
+    font-size: 3rem;
+}
+
+#selectores{
+    height: 10vh;
+    padding: 10px 0px;
+}
+
+#selectores form{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    
+}
+
+#selectores form select{
+    width: 40%;
+}
+
+#tabla{
+    padding: 0px 50px;
+    margin-top: 20px;
+}
+
+#tabla h2{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
