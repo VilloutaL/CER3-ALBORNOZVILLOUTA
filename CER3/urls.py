@@ -21,5 +21,6 @@ from miapp import views
 urlpatterns = [
     path('',views.index, name="home"),
     path('admin/', admin.site.urls),
+    path('singup/',views.singup,name="singup"),
     path('rest/',include('rest.urls')),
 ]
