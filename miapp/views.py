@@ -1,11 +1,16 @@
-from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from django.http import HttpResponse
 
 from miapp.models import Evento
 
 
+=======
+from django.db import IntegrityError
+from django.contrib.auth import login, logout, authenticate
+>>>>>>> 1ca645a036bf701dfe42107d59f992c73740fb55
 # Create your views here.
 def index(request):
     segmento = request.GET.get("segmento", "S")
@@ -64,10 +69,13 @@ def singup(request):
     else:
         if request.POST['password1']== request.POST['password2']:
             try:
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['pasword1'])
+                user = User.objects.create_user(
+                    username=request.POST['username'],
+                    password=request.POST['password1'])
                 user.save()
-                return HttpResponse('Usuario creado')
-            except:
+                login(request,user)
+                return redirect('home')
+            except IntegrityError:
                 return render(request,'miapp/singup.html',{
                     'form' : UserCreationForm,
                     'error': 'El usuario ya existe'
@@ -76,3 +84,25 @@ def singup(request):
             'form': UserCreationForm,
             'error': 'Las contraseñas no coinciden'
         })   
+    
+def singout(request):
+    logout(request)
+    return redirect('home')
+
+
+def singin(request):
+    if request.method == 'GET':
+        return render(request, 'miapp/login.html', {
+            'form' : AuthenticationForm
+        })
+    else:
+        user = authenticate(request, username = request.POST['username'], password = request.POST['password'])
+        if user is None:
+            return render(request,'miapp/login.html', {
+                'form' : AuthenticationForm,
+                'error':'Usuario o contraseña incorrecta'
+            })
+        else:
+            login(request,user)
+            return redirect('home')
+            
