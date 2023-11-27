@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('singup/',views.singup,name="singup"),
     path('rest/',include('rest.urls')),
-    path('logout/',views.singout, name="logout")
+    path('logout/',views.singout, name="logout"),
+    path('login/',views.singin, name="login"),
 ]
