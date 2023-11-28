@@ -3,11 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
-from miapp.models import Evento
-=======
 from miapp.models import Evento, Segmento
->>>>>>> 609062b08cda7f41d6d602da5ffa335a350419c9
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 # Create your views here.
