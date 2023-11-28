@@ -19,10 +19,11 @@ from django.urls import path,include
 from miapp import views
 
 urlpatterns = [
-    path('',views.index, name="home"),
+    path('',views.index, name="index"),
     path('admin/', admin.site.urls),
     path('singup/',views.singup,name="singup"),
     path('rest/',include('rest.urls')),
     path('logout/',views.singout, name="logout"),
     path('login/',views.singin, name="login"),
+    path('home/',  views.home, name="home"),
 ]

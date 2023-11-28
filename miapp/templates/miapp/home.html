@@ -5,12 +5,25 @@
 
 <header>
     <img src="{% static 'miapp/media/logo/version-horizontal.png' %}" alt="Logo universidad">
-    <a href="login/">Iniciar sesión</a>
+    <a href="/logout">Cerrar sesion</a>
 </header>
 <main>
     <section id="presentacion">
         <img src="{% static 'miapp/media/R.jpg' %}" alt="Fondo">
         <h2>Calendario de actividades {{año}}</h2>
+    </section>
+    <section id="eventos">
+        <h2>Próximos eventos segmentos</h2>
+        <div id="lista-eventos">
+            {% for evento in mis_eventos %}
+            <div class="evento">
+                <h3>{{evento.fecha_inicio|date:"d"}}</h3>
+                <h3>{{evento.fecha_inicio|date:"F"}}</h3>
+                <h3>{{evento.titulo}}</h3>
+                <p>{{evento.descripcion}}</p>
+            </div>
+            {% endfor %}
+        </div>
     </section>
     <section id="selectores">
         <form action="" method="get">
