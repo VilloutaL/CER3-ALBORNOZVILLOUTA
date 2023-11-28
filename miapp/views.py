@@ -2,10 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
 from miapp.models import Evento
 
 
+=======
+from miapp.models import Evento
+>>>>>>> 76b9b118748a8dd2520d55395042ffe1ee70cfe6
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 # Create your views here.
