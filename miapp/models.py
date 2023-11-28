@@ -9,7 +9,10 @@ class Segmento(models.Model)  :
         ("PR","Profesor"),
         ("JC","Jefe de Carrera"),
     }
-    segmento = models.CharField(max_length=20, choices=SEGMENTO_CHOICES) 
+    segmento = models.CharField(max_length=20, choices=SEGMENTO_CHOICES)
+
+    def __str__(self) -> str:
+        return self.segmento
     
 class Evento(models.Model):
     fecha_inicio = models.DateTimeField()

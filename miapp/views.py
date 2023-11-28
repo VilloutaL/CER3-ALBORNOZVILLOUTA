@@ -3,19 +3,25 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+<<<<<<< HEAD
 from miapp.models import Evento
+=======
+from miapp.models import Evento, Segmento
+>>>>>>> 609062b08cda7f41d6d602da5ffa335a350419c9
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 # Create your views here.
+
+
 def index(request):
     segmento = request.GET.get("segmento", "S")
     tipo = request.GET.get("tipo", "S")
     año = 2023
 
     if(segmento == "S"):
-        opciones_segmentos = [('S', "Todos")] + list(Evento.SEGMENTO_CHOICES)
+        opciones_segmentos = [('S', "Todos")] + list(Segmento.SEGMENTO_CHOICES)
     else:
-        opciones_segmentos = list(Evento.SEGMENTO_CHOICES)
+        opciones_segmentos = list(Segmento.SEGMENTO_CHOICES)
         for opcion in opciones_segmentos:
             if opcion[0] == segmento:
                 opciones_segmentos.remove(opcion)
@@ -37,7 +43,7 @@ def index(request):
 
     eventos = Evento.objects.all()
     if (segmento != "S"):
-        eventos = eventos.filter(segmento = segmento)
+        eventos = eventos.filter(segmento__segmento = segmento)
     if (tipo != "S"):
         eventos = eventos.filter(tipo = tipo)
 
@@ -51,6 +57,9 @@ def index(request):
     }
     return render(request,'miapp/index.html',data)
 
+
+
+
 @login_required
 def home(request):
     segmento = request.GET.get("segmento", "S")
@@ -58,9 +67,9 @@ def home(request):
     año = 2023
 
     if(segmento == "S"):
-        opciones_segmentos = [('S', "Todos")] + list(Evento.SEGMENTO_CHOICES)
+        opciones_segmentos = [('S', "Todos")] + list(Segmento.SEGMENTO_CHOICES)
     else:
-        opciones_segmentos = list(Evento.SEGMENTO_CHOICES)
+        opciones_segmentos = list(Segmento.SEGMENTO_CHOICES)
         for opcion in opciones_segmentos:
             if opcion[0] == segmento:
                 opciones_segmentos.remove(opcion)
@@ -77,24 +86,28 @@ def home(request):
                 opciones_tipo.insert(0, opcion)
         opciones_tipo.append(('S', "Todos"))
 
+
+
     eventos = Evento.objects.all()
     usuario = request.user
     grupos_usuario = usuario.groups.all()
 
     for grupo in grupos_usuario:
         if (grupo.name == "Profesor"):
-            mis_eventos = eventos.filter(segmento = "PR")
+            mis_eventos = eventos.filter(segmento__segmento = "PR")
         elif (grupo.name == "Jefe Carrera"):
-            mis_eventos = eventos.filter(segmento = "JC")
+            mis_eventos = eventos.filter(segmento__segmento = "JC")
     
     
     
     
 
+    eventos = Evento.objects.all()
     if (segmento != "S"):
-        eventos = eventos.filter(segmento = segmento)
+        eventos = eventos.filter(segmento__segmento = segmento)
     if (tipo != "S"):
         eventos = eventos.filter(tipo = tipo)
+
 
     data ={ 
         "año": año,
