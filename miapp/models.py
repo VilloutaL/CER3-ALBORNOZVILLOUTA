@@ -1,6 +1,16 @@
 from django.db import models
 
 # Create your models here.
+
+class Segmento(models.Model)  : 
+    SEGMENTO_CHOICES={
+        ("CU","Comunidad USM"),
+        ("ES","Estudiante"),
+        ("PR","Profesor"),
+        ("JC","Jefe de Carrera"),
+    }
+    segmento = models.CharField(max_length=20, choices=SEGMENTO_CHOICES) 
+    
 class Evento(models.Model):
     fecha_inicio = models.DateTimeField()
     fecha_termino = models.DateTimeField()
@@ -21,10 +31,6 @@ class Evento(models.Model):
         ("OAI","OAI"),
     }
     tipo = models.CharField(max_length=20,choices=TIPO_CHOICES)
-    SEGMENTO_CHOICES={
-        ("CU","Comunidad USM"),
-        ("ES","Estudiante"),
-        ("PR","Profesor"),
-        ("JC","Jefe de Carrera"),
-    }
-    segmento = models.CharField(max_length=20, choices=SEGMENTO_CHOICES)
+    segmento = models.ManyToManyField(Segmento)
+    
+

@@ -1,16 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-<<<<<<< HEAD
 from django.http import HttpResponse
-
 from miapp.models import Evento
-
-
-=======
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
->>>>>>> 1ca645a036bf701dfe42107d59f992c73740fb55
 # Create your views here.
 def index(request):
     segmento = request.GET.get("segmento", "S")
