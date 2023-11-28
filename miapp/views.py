@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -12,8 +13,8 @@ from django.contrib.auth import login, logout, authenticate
 def index(request):
     segmento = request.GET.get("segmento", "S")
     tipo = request.GET.get("tipo", "S")
-    año = 2023
-
+    fecha_actual = datetime.now()
+    año = fecha_actual.year
     if(segmento == "S"):
         opciones_segmentos = [('S', "Todos")] + list(Segmento.SEGMENTO_CHOICES)
     else:
@@ -37,12 +38,13 @@ def index(request):
    
     
 
-    eventos = Evento.objects.all()
+    eventos = Evento.objects.filter(fecha_termino__gte = fecha_actual)
     if (segmento != "S"):
         eventos = eventos.filter(segmento__segmento = segmento)
     if (tipo != "S"):
         eventos = eventos.filter(tipo = tipo)
 
+    eventos = eventos.order_by('fecha_inicio')
 
     data ={ 
         "año": año,
@@ -60,7 +62,8 @@ def index(request):
 def home(request):
     segmento = request.GET.get("segmento", "S")
     tipo = request.GET.get("tipo", "S")
-    año = 2023
+    fecha_actual = datetime.now()
+    año = fecha_actual.year
 
     if(segmento == "S"):
         opciones_segmentos = [('S', "Todos")] + list(Segmento.SEGMENTO_CHOICES)
@@ -88,21 +91,27 @@ def home(request):
     usuario = request.user
     grupos_usuario = usuario.groups.all()
 
+
+    eventos = Evento.objects.filter(fecha_termino__gte = fecha_actual)
+    if (segmento != "S"):
+        eventos = eventos.filter(segmento__segmento = segmento)
+    if (tipo != "S"):
+        eventos = eventos.filter(tipo = tipo)
+
+    eventos = eventos.order_by('fecha_inicio')
+    
     for grupo in grupos_usuario:
         if (grupo.name == "Profesor"):
             mis_eventos = eventos.filter(segmento__segmento = "PR")
         elif (grupo.name == "Jefe Carrera"):
             mis_eventos = eventos.filter(segmento__segmento = "JC")
-    
-    
-    
-    
 
-    eventos = Evento.objects.all()
-    if (segmento != "S"):
-        eventos = eventos.filter(segmento__segmento = segmento)
-    if (tipo != "S"):
-        eventos = eventos.filter(tipo = tipo)
+    aux = []
+    contador = 0
+    for i in mis_eventos:
+        if contador < 3:
+            aux.append(i)
+        contador +=1
 
 
     data ={ 
@@ -111,7 +120,7 @@ def home(request):
         "opciones_tipo": opciones_tipo,
         "eventos": eventos,
         "segmento": segmento,
-        "mis_eventos": mis_eventos
+        "mis_eventos": aux
     }
     return render(request,'miapp/home.html',data)
 
